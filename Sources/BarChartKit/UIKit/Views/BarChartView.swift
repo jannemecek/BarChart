@@ -86,6 +86,14 @@ public final class BarChartView: UIView {
             }
         }
     }
+    
+    public var barBackgroundColor: UIColor = .white {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.setNeedsLayout()
+            }
+        }
+    }
 
     public weak var delegate: BarChartViewDelegate?
 
@@ -256,6 +264,8 @@ public final class BarChartView: UIView {
     private func add(barView: UIView, barStackView: UIStackView, bar: DataSet.DataElement.Bar, maxValue: Double) -> UIView {
         let divider: Double = maxValue / bar.value
         let barParentView = UIView()
+        barParentView.backgroundColor = barBackgroundColor
+        barParentView.layer.cornerRadius = barWidth / 2
         barParentView.isUserInteractionEnabled = false
         barStackView.addArrangedSubview(barParentView)
         barParentView.translatesAutoresizingMaskIntoConstraints = false
